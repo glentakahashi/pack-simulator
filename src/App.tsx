@@ -13,6 +13,7 @@ const App: React.FC = () => {
   const [packsOpened, setPacksOpened] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
+  const [showStats, setShowStats] = useState(true);
 
   const handleOpenPack = () => {
     setIsOpening(true);
@@ -81,29 +82,6 @@ const App: React.FC = () => {
     <div className="app">
       <header className="app-header">
         <h1>Lorcana Card Simulator</h1>
-        <div className="stats-container">
-          <div className="stat-box">
-            <span className="stat-label">Packs Opened:</span>
-            <span className="stat-value">{packsOpened}</span>
-          </div>
-          <div className="stat-box">
-            <span className="stat-label">Total Cost:</span>
-            <span className="stat-value">${totalCost.toFixed(2)}</span>
-          </div>
-          <div className="stat-box">
-            <span className="stat-label">Total Value:</span>
-            <span className="stat-value">${totalValue.toFixed(2)}</span>
-          </div>
-          <div className="stat-box">
-            <span className="stat-label">Total Profit/Loss:</span>
-            <span className={`stat-value ${profitLoss >= 0 ? 'profit' : 'loss'}`}>
-              ${profitLoss.toFixed(2)}
-            </span>
-          </div>
-          <button className="reset-button" onClick={handleReset}>
-            Reset Session
-          </button>
-        </div>
         <div className="pack-info">
           <div className="set-selector">
             <label htmlFor="set-select">Select Set:</label>
@@ -133,6 +111,42 @@ const App: React.FC = () => {
           </div>
         </div>
       </header>
+
+      <button
+        className={`stats-toggle ${showStats ? 'active' : ''}`}
+        onClick={() => setShowStats(!showStats)}
+        title={showStats ? 'Hide Stats' : 'Show Stats'}
+      >
+        {showStats ? '📊' : '📈'}
+      </button>
+
+      {showStats && (
+        <div className="stats-sticky">
+          <div className="stats-container">
+            <div className="stat-box">
+              <span className="stat-label">Packs Opened:</span>
+              <span className="stat-value">{packsOpened}</span>
+            </div>
+            <div className="stat-box">
+              <span className="stat-label">Total Cost:</span>
+              <span className="stat-value">${totalCost.toFixed(2)}</span>
+            </div>
+            <div className="stat-box">
+              <span className="stat-label">Total Value:</span>
+              <span className="stat-value">${totalValue.toFixed(2)}</span>
+            </div>
+            <div className="stat-box">
+              <span className="stat-label">Total Profit/Loss:</span>
+              <span className={`stat-value ${profitLoss >= 0 ? 'profit' : 'loss'}`}>
+                ${profitLoss.toFixed(2)}
+              </span>
+            </div>
+            <button className="reset-button" onClick={handleReset}>
+              Reset Session
+            </button>
+          </div>
+        </div>
+      )}
 
       <main>
         <CardDisplay cards={cards} />

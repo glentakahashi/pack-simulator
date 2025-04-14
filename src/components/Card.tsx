@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card as CardType } from '../types/card';
 import '../styles/Card.css';
 
 interface CardProps {
   card: CardType;
   index: number;
+  hideUntilHover?: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({ card, index }) => {
+export const Card: React.FC<CardProps> = ({ card, index, hideUntilHover = false }) => {
+  const [isRevealed, setIsRevealed] = useState(false);
   const price = card.isFoil ? card.foilPrice : card.normalPrice;
+
+  const handleMouseEnter = () => {
+    if (hideUntilHover) {
+      setIsRevealed(true);
+    }
+  };
 
   return (
     <div
-      className={`card ${card.rarity.toLowerCase().replace(' ', '-')} ${card.isFoil ? 'foil' : ''}`}
+      className={`card ${card.rarity.toLowerCase().replace(' ', '-')} ${card.isFoil ? 'foil' : ''} ${hideUntilHover ? 'hide-until-hover' : ''} ${isRevealed ? 'revealed' : ''}`}
+      onMouseEnter={handleMouseEnter}
       style={
         {
           animationDelay: `${index * 0.1}s`,

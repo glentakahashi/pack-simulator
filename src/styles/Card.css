@@ -10,11 +10,15 @@
 .card {
   perspective: 1000px;
   position: relative;
-  transform: translateY(20px);
-  padding: 2em;
+  width: 200px;
+  padding: 0.5em;
   border-radius: 8px;
   background-color: #1a1a1a;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .card.foil {
@@ -22,6 +26,16 @@
 }
 
 .card.enchanted {
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
+}
+
+.card.foil.revealed,
+.card.foil:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.card.enchanted.revealed,
+.card.enchanted:hover {
   box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
 }
 
@@ -40,8 +54,8 @@
 .card-front,
 .card-back {
   position: absolute;
-  width: 180px;
-  height: 252px;
+  width: 100%;
+  height: 100%;
   backface-visibility: hidden;
   border-radius: 4px;
   overflow: hidden;
@@ -52,7 +66,8 @@
 }
 
 .card-front img {
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
   border-radius: 4px;
 }
 
@@ -68,7 +83,6 @@
 .card img {
   width: 180px;
   height: 252px;
-  object-fit: cover;
   border-radius: 4px;
 }
 
@@ -80,6 +94,17 @@
   height: 100%;
   background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
   mix-blend-mode: overlay;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.card.hide-until-hover .foil-overlay {
+  opacity: 0;
+}
+
+.card.hide-until-hover.revealed .foil-overlay,
+.card.hide-until-hover:hover .foil-overlay {
+  opacity: 1;
 }
 
 .card.enchanted .foil-overlay {
@@ -106,10 +131,12 @@
 
 .card-info {
   text-align: center;
-  max-width: 180px;
+  width: 100%;
   color: white;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  padding: 0.5rem;
 }
 
 .card-name {
@@ -210,4 +237,41 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.card.hide-until-hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card.hide-until-hover .card-info {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.card.hide-until-hover:hover .card-inner,
+.card.hide-until-hover.revealed .card-inner {
+  transform: rotateY(0deg);
+}
+
+.card.hide-until-hover:hover .card-info,
+.card.hide-until-hover.revealed .card-info {
+  opacity: 1;
+}
+
+.card.hide-until-hover.foil {
+  box-shadow: none;
+}
+
+.card.hide-until-hover.enchanted {
+  box-shadow: none;
+}
+
+.card.hide-until-hover.foil.revealed,
+.card.hide-until-hover.foil:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.card.hide-until-hover.enchanted.revealed,
+.card.hide-until-hover.enchanted:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
 }

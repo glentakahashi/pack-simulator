@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Card } from '../types/card';
 import { Card as CardComponent } from './Card';
 import '../styles/CardDisplay.css';
@@ -8,16 +8,51 @@ interface CardDisplayProps {
 }
 
 export const CardDisplay: React.FC<CardDisplayProps> = ({ cards }) => {
-  // sort cards by value, highest to lowest
-  const sortedCards = [...cards].sort((a, b) => {
-    const aValue = a.isFoil ? a.foilPrice : a.normalPrice;
-    const bValue = b.isFoil ? b.foilPrice : b.normalPrice;
-    return bValue - aValue;
-  });
+  const [revealImmediately, setRevealImmediately] = useState(false);
+  const [sortByPrice, setSortByPrice] = useState(false);
+  const renderCount = useRef(0);
+
+  // Only sort if sortByPrice is enabled
+  const displayCards = sortByPrice
+    ? [...cards].sort((a, b) => {
+        const aValue = a.isFoil ? a.foilPrice : a.normalPrice;
+        const bValue = b.isFoil ? b.foilPrice : b.normalPrice;
+        return bValue - aValue;
+      })
+    : cards;
+
+  // Increment render count when cards change
+  React.useEffect(() => {
+    renderCount.current += 1;
+  }, [cards]);
+
   return (
     <div className="cards-container">
-      {sortedCards.map((card, index) => (
-        <CardComponent key={`${card.id}-${index}`} card={card} index={index} />
+      <div className="display-options">
+        <label>
+          <input
+            type="checkbox"
+            checked={revealImmediately}
+            onChange={e => setRevealImmediately(e.target.checked)}
+          />
+          Reveal cards immediately
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={sortByPrice}
+            onChange={e => setSortByPrice(e.target.checked)}
+          />
+          Sort by price (high to low)
+        </label>
+      </div>
+      {displayCards.map((card, index) => (
+        <CardComponent
+          key={`${card.id}-${index}-${renderCount.current}`}
+          card={card}
+          index={index}
+          hideUntilHover={!revealImmediately}
+        />
       ))}
     </div>
   );
