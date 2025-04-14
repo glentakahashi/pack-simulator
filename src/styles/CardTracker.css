@@ -1,0 +1,107 @@
+.card-tracker {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.card-tracker h2 {
+  margin: 0 0 1rem 0;
+  color: white;
+  text-align: center;
+}
+
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.tracked-card {
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tracker-card-name {
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50%;
+}
+
+.card-counts {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  min-width: 60px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.normal-count {
+  color: #b0b0b0;
+}
+
+.foil-count {
+  color: #ffd700;
+}
+
+.card-rarity {
+  font-size: 0.8rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+  min-width: 20px;
+  text-align: center;
+}
+
+.card-rarity.common {
+  background-color: var(--common-color);
+  color: black;
+}
+
+.card-rarity.uncommon {
+  background-color: var(--uncommon-color);
+  color: black;
+}
+
+.card-rarity.rare {
+  background-color: var(--rare-color);
+  color: white;
+}
+
+.card-rarity.super-rare {
+  background-color: var(--super-rare-color);
+  color: white;
+}
+
+.card-rarity.legendary {
+  background-color: var(--legendary-color);
+  color: black;
+}
+
+.card-rarity.enchanted {
+  background-color: var(--enchanted-color);
+  color: white;
+}
