@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
   const handleOpenPack = () => {
     setIsOpening(true);
-    const { cards: newCards, packValue: newPackValue } = openPack();
+    const { cards: newCards, packValue: newPackValue } = openPack(currentSet);
     const packCost = PACK_COSTS[currentSet].single;
 
     setCards(newCards);
@@ -35,7 +35,7 @@ const App: React.FC = () => {
     const boxCost = PACK_COSTS[currentSet].box;
 
     for (let i = 0; i < 24; i++) {
-      const { cards: newCards, packValue: newPackValue } = openPack();
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet);
       totalValue += newPackValue;
       allNewCards = [...allNewCards, ...newCards];
     }
@@ -55,7 +55,7 @@ const App: React.FC = () => {
     const caseCost = PACK_COSTS[currentSet].case;
 
     for (let i = 0; i < 96; i++) {
-      const { cards: newCards, packValue: newPackValue } = openPack();
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet);
       totalValue += newPackValue;
       allNewCards = [...allNewCards, ...newCards];
     }
@@ -93,7 +93,7 @@ const App: React.FC = () => {
             >
               {Object.keys(PACK_COSTS).map(set => (
                 <option key={set} value={set}>
-                  {set} (${PACK_COSTS[set as SetName].single.toFixed(2)})
+                  {set}
                 </option>
               ))}
             </select>

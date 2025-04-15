@@ -1,11 +1,24 @@
 import { Card, Rarity } from '../types/card';
-import firstChapterCards from '../cards/firstchapter.json';
+import cardData from '../cards/data.json';
 
 export type SetName =
   | 'The First Chapter'
   | 'Rise of the Floodborn'
   | 'Into the Inklands'
-  | 'Disney100';
+  | "Ursula's Return"
+  | 'Shimmering Skies'
+  | 'Azurite Sea'
+  | "Archazia's Island";
+
+const SetIdToSetName: Record<string, SetName> = {
+  '001': 'The First Chapter',
+  '002': 'Rise of the Floodborn',
+  '003': 'Into the Inklands',
+  '004': "Ursula's Return",
+  '005': 'Shimmering Skies',
+  '006': 'Azurite Sea',
+  '007': "Archazia's Island",
+};
 
 interface SetPrices {
   single: number;
@@ -15,39 +28,76 @@ interface SetPrices {
 
 export const PACK_COSTS: Record<SetName, SetPrices> = {
   'The First Chapter': {
-    single: 13.92,
-    box: 424.01, // 24 packs
-    case: 1460.08, // 96 packs
+    single: 14.9,
+    box: 424.01,
+    case: 1460.08,
   },
   'Rise of the Floodborn': {
-    single: 5.99,
-    box: 119.99,
-    case: 479.99,
+    single: 6.33,
+    box: 161.71,
+    case: 633.81,
   },
   'Into the Inklands': {
-    single: 5.99,
-    box: 119.99,
-    case: 479.99,
+    single: 5.57,
+    box: 82.16,
+    case: 403.4,
   },
-  Disney100: {
-    single: 6.99,
-    box: 139.99,
-    case: 559.99,
+  "Ursula's Return": {
+    single: 5.01,
+    box: 91.87,
+    case: 370.75,
+  },
+  'Shimmering Skies': {
+    single: 4.69,
+    box: 107.97,
+    case: 416.19,
+  },
+  'Azurite Sea': {
+    single: 7.28,
+    box: 101.5,
+    case: 402.04,
+  },
+  "Archazia's Island": {
+    single: 8.97,
+    box: 129.72,
+    case: 538.62,
   },
 } as const;
 
 // Convert the JSON data to our Card type
-const ALL_CARDS: Card[] = firstChapterCards.map((card, index) => ({
-  id: `${card.name}-${index}`,
-  name: card.name,
-  imageUrl: card.src,
-  rarity: card.rarity as Rarity,
-  set: 'The First Chapter',
-  number: card.src.split('/').pop() || '',
-  normalPrice: parseFloat(card.normalPrice),
-  foilPrice: parseFloat(card.foilPrice),
-  isFoil: false,
-}));
+const ALL_CARDS = Object.fromEntries(
+  Object.entries(cardData).map(([setId, cards]) => [
+    SetIdToSetName[setId],
+    cards.map(card => ({
+      id: card.id,
+      name: card.title ? `${card.name} - ${card.title}` : card.name,
+      // title case the rarity of every word before casting
+      rarity: card.rarity
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ') as Rarity,
+      set: SetIdToSetName[setId],
+      number: card.number,
+      normalPrice: card.normalPrice,
+      foilPrice: card.foilPrice,
+      isFoil: false,
+    })),
+  ])
+) as Record<SetName, Card[]>;
+
+// Create a pool of cards for each rarity for each set
+const RARITY_POOLS = Object.fromEntries(
+  Object.entries(ALL_CARDS).map(([set, cards]) => [
+    set,
+    cards.reduce(
+      (acc, card) => {
+        acc[card.rarity] = [...(acc[card.rarity] || []), card];
+        return acc;
+      },
+      {} as Record<Rarity, Card[]>
+    ),
+  ])
+) as Record<SetName, Record<Rarity, Card[]>>;
 
 // Number per pack
 const RAW_RARE_RARITY_DISTRIBUTION: Record<'Rare' | 'Super Rare' | 'Legendary', number> = {
@@ -87,18 +137,9 @@ const FOIL_RARITY_DISTRIBUTION = Object.fromEntries(
   ])
 );
 
-export const openPack = (): { cards: Card[]; packValue: number } => {
+export const openPack = (set: SetName): { cards: Card[]; packValue: number } => {
   const pack: Card[] = [];
-
-  // Create a pool of cards for each rarity
-  const rarityPools = {
-    Common: ALL_CARDS.filter(card => card.rarity === 'Common'),
-    Uncommon: ALL_CARDS.filter(card => card.rarity === 'Uncommon'),
-    Rare: ALL_CARDS.filter(card => card.rarity === 'Rare'),
-    'Super Rare': ALL_CARDS.filter(card => card.rarity === 'Super Rare'),
-    Legendary: ALL_CARDS.filter(card => card.rarity === 'Legendary'),
-    Enchanted: ALL_CARDS.filter(card => card.rarity === 'Enchanted'),
-  };
+  const rarityPools = RARITY_POOLS[set];
 
   // Add 6 Common cards
   for (let i = 0; i < 6; i++) {

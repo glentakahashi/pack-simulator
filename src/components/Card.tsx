@@ -8,7 +8,7 @@ interface CardProps {
   hideUntilHover?: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({ card, index, hideUntilHover = false }) => {
+export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const price = card.isFoil ? card.foilPrice : card.normalPrice;
 
@@ -24,14 +24,13 @@ export const Card: React.FC<CardProps> = ({ card, index, hideUntilHover = false 
       onMouseEnter={handleMouseEnter}
       style={
         {
-          animationDelay: `${index * 0.1}s`,
           '--card-rarity': `var(--${card.rarity.toLowerCase().replace(' ', '-')}-color)`,
         } as React.CSSProperties
       }
     >
       <div className="card-inner">
         <div className="card-front">
-          <img src={card.imageUrl} alt={card.name} />
+          <img src={`/images/cards/${card.id}.jpg`} alt={card.name} />
           {card.isFoil && <div className="foil-overlay"></div>}
         </div>
         <div className="card-back">

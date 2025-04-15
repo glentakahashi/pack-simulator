@@ -3,7 +3,6 @@ export type Rarity = 'Common' | 'Uncommon' | 'Rare' | 'Super Rare' | 'Legendary'
 export interface Card {
   id: string;
   name: string;
-  imageUrl: string;
   rarity: Rarity;
   set: string;
   number: string;
