@@ -100,25 +100,13 @@ const RARITY_POOLS = Object.fromEntries(
 ) as Record<SetName, Record<Rarity, Card[]>>;
 
 // Number per pack
-const RAW_RARE_RARITY_DISTRIBUTION: Record<'Rare' | 'Super Rare' | 'Legendary', number> = {
-  Rare: 1.5,
+const RARE_RARITY_DISTRIBUTION: Record<'Super Rare' | 'Legendary', number> = {
   'Super Rare': 1 / 2,
   Legendary: 1 / 6,
 };
-const RARE_RARITY_SUM = Object.values(RAW_RARE_RARITY_DISTRIBUTION).reduce(
-  (sum, value) => sum + value,
-  0
-);
-// Sum up the totals
-const RARE_RARITY_DISTRIBUTION = Object.fromEntries(
-  Object.entries(RAW_RARE_RARITY_DISTRIBUTION).map(([rarity, value]) => [
-    rarity,
-    value / RARE_RARITY_SUM,
-  ])
-);
 
 // Number per pack
-const RAW_FOIL_RARITY_DISTRIBUTION: Record<Rarity, number> = {
+const FOIL_RARITY_DISTRIBUTION: Record<Rarity, number> = {
   Common: 1 / 2,
   Uncommon: 1 / 4,
   Rare: 1 / 8,
@@ -126,16 +114,6 @@ const RAW_FOIL_RARITY_DISTRIBUTION: Record<Rarity, number> = {
   Legendary: 1 / 48,
   Enchanted: 1 / 96,
 };
-const FOIL_RARITY_SUM = Object.values(RAW_FOIL_RARITY_DISTRIBUTION).reduce(
-  (sum, value) => sum + value,
-  0
-);
-const FOIL_RARITY_DISTRIBUTION = Object.fromEntries(
-  Object.entries(RAW_FOIL_RARITY_DISTRIBUTION).map(([rarity, value]) => [
-    rarity,
-    value / FOIL_RARITY_SUM,
-  ])
-);
 
 export const openPack = (set: SetName): { cards: Card[]; packValue: number } => {
   const pack: Card[] = [];
@@ -154,6 +132,7 @@ export const openPack = (set: SetName): { cards: Card[]; packValue: number } => 
   }
 
   // Add 2 Rare or higher cards
+  const tiers = [0, 0];
   for (let i = 0; i < 2; i++) {
     const rarityRoll = Math.random();
     let selectedPool;
@@ -161,9 +140,11 @@ export const openPack = (set: SetName): { cards: Card[]; packValue: number } => 
     if (rarityRoll < RARE_RARITY_DISTRIBUTION.Legendary) {
       // one per 6 packs on average
       selectedPool = rarityPools.Legendary;
-    } else if (rarityRoll < RARE_RARITY_DISTRIBUTION.SuperRare) {
+      tiers[i] = 2;
+    } else if (rarityRoll < RARE_RARITY_DISTRIBUTION['Super Rare']) {
       // one per 2 packs on average
       selectedPool = rarityPools['Super Rare'];
+      tiers[i] = 1;
     } else {
       // 1.5 per pack on average
       selectedPool = rarityPools.Rare;
@@ -177,6 +158,12 @@ export const openPack = (set: SetName): { cards: Card[]; packValue: number } => 
       const randomIndex = Math.floor(Math.random() * rarityPools.Rare.length);
       pack.push(rarityPools.Rare[randomIndex]);
     }
+  }
+  if (tiers[0] > tiers[1]) {
+    // swap the two rare or higher cards
+    const temp = pack[pack.length - 1];
+    pack[pack.length - 1] = pack[pack.length - 2];
+    pack[pack.length - 2] = temp;
   }
 
   // Add 1 foil card with correct distribution
