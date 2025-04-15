@@ -32,7 +32,7 @@ const processCard = card => {
       rarity: data.rarity,
       normalPrice: data.prices?.base?.TP?.price ?? 0,
       foilPrice: (data.prices?.foil ?? data.prices?.base)?.TP?.price ?? 0,
-      color: data.colors[0],
+      colors: data.colors,
     };
   } catch (error) {
     console.error('Error processing card:', error);
