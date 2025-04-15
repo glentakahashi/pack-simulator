@@ -39,13 +39,20 @@
   gap: 0.5rem;
 }
 
+.card-name-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
 .tracker-card-name {
   font-weight: bold;
   color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 50%;
 }
 
 .card-counts {
@@ -111,7 +118,6 @@
 .rarity-icon {
   width: 24px;
   height: 24px;
-  margin-left: 8px;
-  vertical-align: middle;
+  flex-shrink: 0;
   object-fit: contain;
 }

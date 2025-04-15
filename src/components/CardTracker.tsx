@@ -61,16 +61,18 @@ export const CardTracker: React.FC<CardTrackerProps> = ({ openedCards }) => {
           <div key={id} className="tracked-card">
             <div className="card-details">
               <div className="card-info-row">
-                <span className="tracker-card-name">{info.name}</span>
-                <span className="card-counts">
-                  <span className="normal-count">{info.normal}</span>
-                  <span className="foil-count">{info.foil}</span>
+                <div className="card-name-group">
                   <img
                     src={rarityImages[info.rarity]}
                     alt={info.rarity}
                     className="rarity-icon"
                     title={info.rarity}
                   />
+                  <span className="tracker-card-name">{info.name}</span>
+                </div>
+                <span className="card-counts">
+                  <span className="normal-count">{info.normal}</span>
+                  <span className="foil-count">{info.foil}</span>
                 </span>
               </div>
             </div>
