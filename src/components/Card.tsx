@@ -42,7 +42,6 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
           <h3>{card.name}</h3>
         </div>
         <div className="card-details">
-          <span className="rarity">{card.rarity}</span>
           <div className="price-container">
             <span className="price">${price.toFixed(2)}</span>
             {card.isFoil && <span className="foil-badge">Foil</span>}
