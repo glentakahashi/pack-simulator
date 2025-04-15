@@ -6,13 +6,13 @@ interface CardTrackerProps {
   openedCards: Card[];
 }
 
-const rarityAbbreviations: Record<Rarity, string> = {
-  Common: 'C',
-  Uncommon: 'UC',
-  Rare: 'R',
-  'Super Rare': 'SR',
-  Legendary: 'L',
-  Enchanted: 'E',
+const rarityImages: Record<Rarity, string> = {
+  Common: '/images/rarity/common.svg',
+  Uncommon: '/images/rarity/uncommon.svg',
+  Rare: '/images/rarity/rare.svg',
+  'Super Rare': '/images/rarity/super-rare.svg',
+  Legendary: '/images/rarity/legendary.svg',
+  Enchanted: '/images/rarity/enchanted.png',
 };
 
 export const CardTracker: React.FC<CardTrackerProps> = ({ openedCards }) => {
@@ -65,9 +65,12 @@ export const CardTracker: React.FC<CardTrackerProps> = ({ openedCards }) => {
                 <span className="card-counts">
                   <span className="normal-count">{info.normal}</span>
                   <span className="foil-count">{info.foil}</span>
-                  <span className={`card-rarity ${info.rarity.toLowerCase().replace(' ', '-')}`}>
-                    {rarityAbbreviations[info.rarity]}
-                  </span>
+                  <img
+                    src={rarityImages[info.rarity]}
+                    alt={info.rarity}
+                    className="rarity-icon"
+                    title={info.rarity}
+                  />
                 </span>
               </div>
             </div>

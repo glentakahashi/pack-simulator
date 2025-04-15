@@ -50,12 +50,8 @@
 
 .card-counts {
   display: flex;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  min-width: 60px;
-  justify-content: flex-end;
   align-items: center;
+  gap: 4px;
 }
 
 .normal-count {
@@ -64,6 +60,12 @@
 
 .foil-count {
   color: #ffd700;
+}
+
+.normal-count,
+.foil-count {
+  min-width: 20px;
+  text-align: center;
 }
 
 .card-rarity {
@@ -104,4 +106,12 @@
 .card-rarity.enchanted {
   background-color: var(--enchanted-color);
   color: white;
+}
+
+.rarity-icon {
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  vertical-align: middle;
+  object-fit: contain;
 }

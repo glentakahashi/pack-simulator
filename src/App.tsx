@@ -13,7 +13,6 @@ const App: React.FC = () => {
   const [packsOpened, setPacksOpened] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
-  const [showStats, setShowStats] = useState(true);
 
   const handleOpenPack = () => {
     setIsOpening(true);
@@ -81,72 +80,63 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Lorcana Card Simulator</h1>
+        <h1>Lorcana Pack Opening Simulator</h1>
         <div className="pack-info">
-          <div className="set-selector">
-            <label htmlFor="set-select">Select Set:</label>
-            <select
-              id="set-select"
-              value={currentSet}
-              onChange={e => setCurrentSet(e.target.value as SetName)}
-              className="set-dropdown"
-            >
-              {Object.keys(PACK_COSTS).map(set => (
-                <option key={set} value={set}>
-                  {set}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="pack-buttons">
-            <button className="open-pack-button" onClick={handleOpenPack} disabled={isOpening}>
-              Open Single Pack (${PACK_COSTS[currentSet].single.toFixed(2)})
-            </button>
-            <button className="open-box-button" onClick={handleOpenBox} disabled={isOpening}>
-              Open Box - 24 Packs (${PACK_COSTS[currentSet].box.toFixed(2)})
-            </button>
-            <button className="open-case-button" onClick={handleOpenCase} disabled={isOpening}>
-              Open Case - 96 Packs (${PACK_COSTS[currentSet].case.toFixed(2)})
-            </button>
+          <div className="header-content">
+            <div className="stats-container">
+              <div className="stat-box">
+                <span className="stat-label">Packs Opened:</span>
+                <span className="stat-value">{packsOpened}</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-label">Total Cost:</span>
+                <span className="stat-value">${totalCost.toFixed(2)}</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-label">Total Value:</span>
+                <span className="stat-value">${totalValue.toFixed(2)}</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-label">Total Profit/Loss:</span>
+                <span className={`stat-value ${profitLoss >= 0 ? 'profit' : 'loss'}`}>
+                  ${profitLoss.toFixed(2)}
+                </span>
+              </div>
+              <button className="reset-button" onClick={handleReset}>
+                Reset Session
+              </button>
+            </div>
+            <div className="set-selector-container">
+              <div className="set-selector">
+                <label htmlFor="set-select">Select Set:</label>
+                <select
+                  id="set-select"
+                  value={currentSet}
+                  onChange={e => setCurrentSet(e.target.value as SetName)}
+                  className="set-dropdown"
+                >
+                  {Object.keys(PACK_COSTS).map(set => (
+                    <option key={set} value={set}>
+                      {set}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="pack-buttons">
+                <button className="open-pack-button" onClick={handleOpenPack} disabled={isOpening}>
+                  Open Single Pack (${PACK_COSTS[currentSet].single.toFixed(2)})
+                </button>
+                <button className="open-box-button" onClick={handleOpenBox} disabled={isOpening}>
+                  Open Box - 24 Packs (${PACK_COSTS[currentSet].box.toFixed(2)})
+                </button>
+                <button className="open-case-button" onClick={handleOpenCase} disabled={isOpening}>
+                  Open Case - 96 Packs (${PACK_COSTS[currentSet].case.toFixed(2)})
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </header>
-
-      <button
-        className={`stats-toggle ${showStats ? 'active' : ''}`}
-        onClick={() => setShowStats(!showStats)}
-        title={showStats ? 'Hide Stats' : 'Show Stats'}
-      >
-        {showStats ? '📊' : '📈'}
-      </button>
-
-      {showStats && (
-        <div className="stats-sticky">
-          <div className="stats-container">
-            <div className="stat-box">
-              <span className="stat-label">Packs Opened:</span>
-              <span className="stat-value">{packsOpened}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Total Cost:</span>
-              <span className="stat-value">${totalCost.toFixed(2)}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Total Value:</span>
-              <span className="stat-value">${totalValue.toFixed(2)}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Total Profit/Loss:</span>
-              <span className={`stat-value ${profitLoss >= 0 ? 'profit' : 'loss'}`}>
-                ${profitLoss.toFixed(2)}
-              </span>
-            </div>
-            <button className="reset-button" onClick={handleReset}>
-              Reset Session
-            </button>
-          </div>
-        </div>
-      )}
 
       <main>
         <CardDisplay cards={cards} />
