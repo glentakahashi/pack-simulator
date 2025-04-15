@@ -12,7 +12,7 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const price = card.isFoil ? card.foilPrice : card.normalPrice;
 
-  const handleMouseEnter = () => {
+  const handleReveal = () => {
     if (hideUntilHover) {
       setIsRevealed(true);
     }
@@ -23,7 +23,8 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
   return (
     <div
       className={`card ${card.rarity.toLowerCase().replace(' ', '-')} ${card.isFoil ? 'foil' : ''} ${hideUntilHover ? 'hide-until-hover' : ''} ${isRevealed ? 'revealed' : ''}`}
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={handleReveal}
+      onTouchStart={handleReveal}
       style={
         {
           '--card-rarity': `var(--${card.rarity.toLowerCase().replace(' ', '-')}-color)`,
