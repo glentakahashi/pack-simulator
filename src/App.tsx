@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   const handleOpenPack = () => {
     setIsOpening(true);
-    const { cards: newCards, packValue: newPackValue } = openPack(currentSet);
+    const { cards: newCards, packValue: newPackValue } = openPack(currentSet, true);
     const packCost = PACK_COSTS[currentSet].sealed_booster;
 
     setCards(newCards);
@@ -33,8 +33,12 @@ const App: React.FC = () => {
     let allNewCards: Card[] = [];
     const boxCost = PACK_COSTS[currentSet].box;
 
+    let allowEnchanted = true;
     for (let i = 0; i < 24; i++) {
-      const { cards: newCards, packValue: newPackValue } = openPack(currentSet);
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, allowEnchanted);
+      if (newCards.some(card => card.rarity === 'Enchanted')) {
+        allowEnchanted = false;
+      }
       totalValue += newPackValue;
       allNewCards = [...allNewCards, ...newCards];
     }
@@ -53,8 +57,12 @@ const App: React.FC = () => {
     let allNewCards: Card[] = [];
     const caseCost = PACK_COSTS[currentSet].case;
 
+    let numEnchanted = 0;
     for (let i = 0; i < 96; i++) {
-      const { cards: newCards, packValue: newPackValue } = openPack(currentSet);
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, numEnchanted < 2);
+      if (newCards.some(card => card.rarity === 'Enchanted')) {
+        numEnchanted++;
+      }
       totalValue += newPackValue;
       allNewCards = [...allNewCards, ...newCards];
     }

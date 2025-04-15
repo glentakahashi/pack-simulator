@@ -92,7 +92,10 @@ const FOIL_RARITY_DISTRIBUTION: Record<Rarity, number> = {
   Enchanted: 1 / 96,
 };
 
-export const openPack = (set: SetName): { cards: Card[]; packValue: number } => {
+export const openPack = (
+  set: SetName,
+  allowEnchanted: boolean
+): { cards: Card[]; packValue: number } => {
   const pack: Card[] = [];
   const rarityPools = RARITY_POOLS[set];
 
@@ -157,7 +160,7 @@ export const openPack = (set: SetName): { cards: Card[]; packValue: number } => 
   const foilRoll = Math.random();
   let foilPool;
 
-  if (foilRoll < FOIL_RARITY_DISTRIBUTION.Enchanted) {
+  if (allowEnchanted && foilRoll < FOIL_RARITY_DISTRIBUTION.Enchanted) {
     foilPool = rarityPools.Enchanted;
   } else if (foilRoll < FOIL_RARITY_DISTRIBUTION.Legendary) {
     foilPool = rarityPools.Legendary;
