@@ -145,7 +145,7 @@ export const openPack = (set: SetName): { cards: Card[]; packValue: number } => 
   pack.push(...commons);
 
   const uncommons: Card[] = [];
-  const uncommonColors = colors.slice(0, 3).sort(() => Math.random() - 0.5);
+  const uncommonColors = colors.sort(() => Math.random() - 0.5).slice(0, 3);
   // Create 3 Uncommon cards (of different colors)
   for (const color of uncommonColors) {
     const randomIndex = Math.floor(Math.random() * rarityPools.Uncommon[color].length);
