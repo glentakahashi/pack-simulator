@@ -1,6 +1,6 @@
 import { Card, Rarity, Color } from '../types/card';
-import cardData from '../cards/data.json';
-
+import cardData from '../data/cards.json';
+import pricesData from '../data/prices.json';
 const colors: Color[] = ['amber', 'emerald', 'amethyst', 'sapphire', 'steel', 'ruby'];
 
 export type SetName =
@@ -23,49 +23,12 @@ const SetIdToSetName: Record<string, SetName> = {
 };
 
 interface SetPrices {
-  single: number;
+  sealed_booster: number;
   box: number;
   case: number;
 }
 
-// TODO: better way to pull this automatically from tcgplayer
-export const PACK_COSTS: Record<SetName, SetPrices> = {
-  'The First Chapter': {
-    single: 14.9,
-    box: 424.01,
-    case: 1460.08,
-  },
-  'Rise of the Floodborn': {
-    single: 6.33,
-    box: 161.71,
-    case: 633.81,
-  },
-  'Into the Inklands': {
-    single: 5.57,
-    box: 82.16,
-    case: 403.4,
-  },
-  "Ursula's Return": {
-    single: 5.01,
-    box: 91.87,
-    case: 370.75,
-  },
-  'Shimmering Skies': {
-    single: 4.69,
-    box: 107.97,
-    case: 416.19,
-  },
-  'Azurite Sea': {
-    single: 7.28,
-    box: 101.5,
-    case: 402.04,
-  },
-  "Archazia's Island": {
-    single: 8.97,
-    box: 129.72,
-    case: 538.62,
-  },
-} as const;
+export const PACK_COSTS: Record<SetName, SetPrices> = pricesData;
 
 // Convert the JSON data to our Card type
 const ALL_CARDS = Object.fromEntries(
@@ -231,7 +194,7 @@ export const openPack = (set: SetName): { cards: Card[]; packValue: number } => 
 
 export const getPackCost = (
   set: SetName = 'The First Chapter',
-  quantity: 'single' | 'box' | 'case' = 'single'
+  quantity: 'sealed_booster' | 'box' | 'case' = 'sealed_booster'
 ): number => {
   return PACK_COSTS[set][quantity];
 };

@@ -2,20 +2,21 @@
 
 import requests
 import json
+import os
 
 # mapping of each set to list of tcgplayer ids (sealed booster, box, case)
 SET_TO_TCGPLAYER_IDS = {
-    "The First Chapter": ["491182", "485256", "485258"],
-    "Rise of the Floodborn": ["529695", "516276", "518639"],
-    "Into the Inklands": ["543932", "531521", "531522"],
-    "Ursula's Return": ["553902", "543859", "543885"],
-    "Shimmering Skies": ["565133", "555130", "555131"],
-    "Azurite Sea": ["593831", "578093", "578094"],
-    "Archazia's Island": ["607762", "607758", "607759"]
+    "The First Chapter": {'sealed_booster': "491182", 'box': "485256", 'case': "485258"},
+    "Rise of the Floodborn": {'sealed_booster': "529695", 'box': "516276", 'case': "518639"},
+    "Into the Inklands": {'sealed_booster': "543932", 'box': "531521", 'case': "531522"},
+    "Ursula's Return": {'sealed_booster': "553902", 'box': "543859", 'case': "543885"},
+    "Shimmering Skies": {'sealed_booster': "565133", 'box': "555130", 'case': "555131"},
+      "Azurite Sea": {'sealed_booster': "593831", 'box': "578093", 'case': "578094"},
+    "Archazia's Island": {'sealed_booster': "607762", 'box': "607758", 'case': "607759"}
 }
 
 # Initialize prices dictionary
-PRICES = {set_name: [] for set_name in SET_TO_TCGPLAYER_IDS.keys()}
+PRICES = {set_name: {} for set_name in SET_TO_TCGPLAYER_IDS.keys()}
 
 def get_market_price(product_id):
     """Fetch market price for a given TCGPlayer product ID."""
@@ -32,13 +33,15 @@ def get_market_price(product_id):
 # Get the prices for each set
 for set_name, product_ids in SET_TO_TCGPLAYER_IDS.items():
     print(f"Getting prices for {set_name}")
-    for product_id in product_ids:
+    for product_type, product_id in product_ids.items():
         print(f"Getting price for {product_id}")
         price = get_market_price(product_id)
         if price is not None:
-            PRICES[set_name].append(price)
+            PRICES[set_name][product_type] = price
 
-# Print the results
-print("\nPrices by set:")
-for set_name, prices in PRICES.items():
-    print(f"{set_name}: {prices}") 
+# Export the prices to a json file
+# uses dirname of the script to get the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(current_dir, '../../src/data/prices.json'), 'w') as f:
+    json.dump(PRICES, f)
+

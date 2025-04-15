@@ -17,7 +17,7 @@ const App: React.FC = () => {
   const handleOpenPack = () => {
     setIsOpening(true);
     const { cards: newCards, packValue: newPackValue } = openPack(currentSet);
-    const packCost = PACK_COSTS[currentSet].single;
+    const packCost = PACK_COSTS[currentSet].sealed_booster;
 
     setCards(newCards);
     setOpenedCards(prev => [...prev, ...newCards]);
@@ -125,7 +125,7 @@ const App: React.FC = () => {
               </div>
               <div className="pack-buttons">
                 <button className="open-pack-button" onClick={handleOpenPack} disabled={isOpening}>
-                  Open Single Pack (${PACK_COSTS[currentSet].single.toFixed(2)})
+                  Open Single Pack (${PACK_COSTS[currentSet].sealed_booster.toFixed(2)})
                 </button>
                 <button className="open-box-button" onClick={handleOpenBox} disabled={isOpening}>
                   Open Box - 24 Packs (${PACK_COSTS[currentSet].box.toFixed(2)})
