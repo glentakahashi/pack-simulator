@@ -99,7 +99,8 @@ const App: React.FC = () => {
               <div className="stat-box">
                 <span className="stat-label">Total Profit/Loss:</span>
                 <span className={`stat-value ${profitLoss >= 0 ? 'profit' : 'loss'}`}>
-                  ${profitLoss.toFixed(2)} ({((profitLoss / totalCost) * 100).toFixed(1)}%)
+                  ${profitLoss.toFixed(2)} (
+                  {totalCost === 0 ? '0' : ((profitLoss / totalCost) * 100).toFixed(1)}%)
                 </span>
               </div>
               <button className="reset-button" onClick={handleReset}>
