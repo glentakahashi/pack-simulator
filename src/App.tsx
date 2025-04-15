@@ -152,6 +152,10 @@ const App: React.FC = () => {
         <CardDisplay cards={cards} />
         <CardTracker openedCards={openedCards} />
       </main>
+      <footer className="app-footer">
+        <div className="watermark">Prices updated 4/14/25</div>
+        <div className="disclaimer">All images are property of Ravensburger and Disney</div>
+      </footer>
     </div>
   );
 };
