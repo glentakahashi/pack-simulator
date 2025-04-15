@@ -1,4 +1,5 @@
 export type Rarity = 'Common' | 'Uncommon' | 'Rare' | 'Super Rare' | 'Legendary' | 'Enchanted';
+export type Color = 'amber' | 'emerald' | 'amethyst' | 'sapphire' | 'steel' | 'ruby';
 
 export interface Card {
   id: string;
@@ -9,4 +10,5 @@ export interface Card {
   normalPrice: number;
   foilPrice: number;
   isFoil: boolean;
+  color: Color;
 }

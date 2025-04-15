@@ -29,13 +29,11 @@
   box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
 }
 
-.card.foil.revealed,
-.card.foil:hover {
+.card.foil.revealed {
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
-.card.enchanted.revealed,
-.card.enchanted:hover {
+.card.enchanted.revealed {
   box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
 }
 
@@ -47,7 +45,7 @@
   transition: transform 0.6s;
 }
 
-.card:hover .card-inner {
+.card-inner.revealed {
   transform: rotateY(180deg);
 }
 
@@ -102,8 +100,7 @@
   opacity: 0;
 }
 
-.card.hide-until-hover.revealed .foil-overlay,
-.card.hide-until-hover:hover .foil-overlay {
+.card.hide-until-hover.revealed .foil-overlay {
   opacity: 1;
 }
 
@@ -247,12 +244,10 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.card.hide-until-hover:hover .card-inner,
 .card.hide-until-hover.revealed .card-inner {
   transform: rotateY(0deg);
 }
 
-.card.hide-until-hover:hover .card-info,
 .card.hide-until-hover.revealed .card-info {
   opacity: 1;
 }
@@ -265,12 +260,10 @@
   box-shadow: none;
 }
 
-.card.hide-until-hover.foil.revealed,
-.card.hide-until-hover.foil:hover {
+.card.hide-until-hover.foil.revealed {
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
-.card.hide-until-hover.enchanted.revealed,
-.card.hide-until-hover.enchanted:hover {
+.card.hide-until-hover.enchanted.revealed {
   box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
 }
