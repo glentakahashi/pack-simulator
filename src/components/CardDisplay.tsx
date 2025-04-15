@@ -17,6 +17,10 @@ export const CardDisplay: React.FC<CardDisplayProps> = ({ cards }) => {
     ? [...cards].sort((a, b) => {
         const aValue = a.isFoil ? a.foilPrice : a.normalPrice;
         const bValue = b.isFoil ? b.foilPrice : b.normalPrice;
+        // if the values are the same, sort by name
+        if (aValue === bValue) {
+          return a.name.localeCompare(b.name);
+        }
         return bValue - aValue;
       })
     : cards;
