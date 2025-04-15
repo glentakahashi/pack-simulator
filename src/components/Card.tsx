@@ -46,7 +46,11 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
         </div>
         <div className="card-details">
           <div className="price-container">
-            <span className="price">${price.toFixed(2)}</span>
+            <span
+              className={`price ${price > 10 ? 'high-value' : ''} ${price > 100 ? 'premium-value' : ''}`}
+            >
+              ${price.toFixed(2)}
+            </span>
             {card.isFoil && <span className="foil-badge">Foil</span>}
           </div>
         </div>
