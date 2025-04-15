@@ -18,6 +18,8 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
     }
   };
 
+  const imageUrl = new URL(`../images/cards/${card.id}.jpg`, import.meta.url).href;
+
   return (
     <div
       className={`card ${card.rarity.toLowerCase().replace(' ', '-')} ${card.isFoil ? 'foil' : ''} ${hideUntilHover ? 'hide-until-hover' : ''} ${isRevealed ? 'revealed' : ''}`}
@@ -30,7 +32,7 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
     >
       <div className="card-inner">
         <div className="card-front">
-          <img src={`/images/cards/${card.id}.jpg`} alt={card.name} />
+          <img src={imageUrl} alt={card.name} />
           {card.isFoil && <div className="foil-overlay"></div>}
         </div>
         <div className="card-back">

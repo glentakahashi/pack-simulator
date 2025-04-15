@@ -7,12 +7,12 @@ interface CardTrackerProps {
 }
 
 const rarityImages: Record<Rarity, string> = {
-  Common: '/images/rarity/common.svg',
-  Uncommon: '/images/rarity/uncommon.svg',
-  Rare: '/images/rarity/rare.svg',
-  'Super Rare': '/images/rarity/super-rare.svg',
-  Legendary: '/images/rarity/legendary.svg',
-  Enchanted: '/images/rarity/enchanted.png',
+  Common: new URL('../images/rarity/common.svg', import.meta.url).href,
+  Uncommon: new URL('../images/rarity/uncommon.svg', import.meta.url).href,
+  Rare: new URL('../images/rarity/rare.svg', import.meta.url).href,
+  'Super Rare': new URL('../images/rarity/super-rare.svg', import.meta.url).href,
+  Legendary: new URL('../images/rarity/legendary.svg', import.meta.url).href,
+  Enchanted: new URL('../images/rarity/enchanted.png', import.meta.url).href,
 };
 
 export const CardTracker: React.FC<CardTrackerProps> = ({ openedCards }) => {
