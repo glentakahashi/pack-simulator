@@ -28,6 +28,7 @@ interface SetPrices {
   case: number;
 }
 
+// TODO: better way to pull this automatically from tcgplayer
 export const PACK_COSTS: Record<SetName, SetPrices> = {
   'The First Chapter': {
     single: 14.9,
