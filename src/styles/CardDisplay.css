@@ -7,6 +7,12 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
 .display-options {
   grid-column: 1 / -1;
   padding: 0.5rem;
