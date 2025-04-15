@@ -222,6 +222,7 @@ main {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 @media (max-width: 768px) {
