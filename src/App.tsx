@@ -111,7 +111,7 @@ const App: React.FC = () => {
               </div>
               <div className="stat-box">
                 <span className="stat-label">Total Value:</span>
-                <span className="stat-value">${totalValue.toFixed(2)}</span>
+                <span className="stat-value">${adjustedValue.toFixed(2)}</span>
               </div>
               <div className="stat-box">
                 <span className="stat-label">Total Profit/Loss:</span>
