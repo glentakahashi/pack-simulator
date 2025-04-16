@@ -9,10 +9,19 @@ interface CardProps {
   useEightyPercent: boolean;
 }
 
+const getPriceTier = (price: number): string => {
+  if (price > 100) return 'tier-4';
+  if (price > 25) return 'tier-3';
+  if (price > 5) return 'tier-2';
+  if (price > 1) return 'tier-1';
+  return 'tier-0';
+};
+
 export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false, useEightyPercent }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const price = card.isFoil ? card.foilPrice : card.normalPrice;
   const adjustedPrice = useEightyPercent ? price * 0.8 : price;
+  const priceTier = getPriceTier(adjustedPrice);
 
   const handleReveal = () => {
     if (hideUntilHover) {
@@ -48,11 +57,7 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false, useEig
         </div>
         <div className="card-details">
           <div className="price-container">
-            <span
-              className={`price ${adjustedPrice > 5 ? 'medium-value' : ''} ${adjustedPrice > 10 ? 'high-value' : ''} ${adjustedPrice > 100 ? 'premium-value' : ''}`}
-            >
-              ${adjustedPrice.toFixed(2)}
-            </span>
+            <span className={`price ${priceTier}`}>${adjustedPrice.toFixed(2)}</span>
             {card.isFoil && <span className="foil-badge">Foil</span>}
           </div>
         </div>

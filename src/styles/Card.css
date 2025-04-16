@@ -5,6 +5,13 @@
   --super-rare-color: #9b59b6;
   --legendary-color: #f1c40f;
   --enchanted-color: #ff00ff;
+
+  /* Price tier colors */
+  --price-tier-0-color: #b0b0b0;
+  --price-tier-1-color: #ffffff;
+  --price-tier-2-color: #2ecc71;
+  --price-tier-3-color: #3498db;
+  --price-tier-4-color: #f1c40f;
 }
 
 .card {
@@ -172,23 +179,28 @@
   transition: all 0.3s ease;
 }
 
-.card-details .price.medium-value {
-  color: #ff9800;
+.card-details .price.tier-0 {
+  color: var(--price-tier-0-color);
+  opacity: 0.8;
+}
+
+.card-details .price.tier-1 {
+  color: var(--price-tier-1-color);
+}
+
+.card-details .price.tier-2 {
+  color: var(--price-tier-2-color);
   font-weight: bold;
 }
 
-.card-details .price.high-value {
-  color: #4caf50;
+.card-details .price.tier-3 {
+  color: var(--price-tier-3-color);
   font-weight: bold;
 }
 
-.card-details .price.premium-value {
-  color: #4caf50;
+.card-details .price.tier-4 {
+  color: var(--price-tier-4-color);
   font-weight: bold;
-  text-shadow:
-    0 0 5px #4caf50,
-    0 0 10px #4caf50;
-  animation: premium-glow 2s ease-in-out infinite alternate;
 }
 
 .foil-badge {
@@ -236,15 +248,13 @@
 
 @keyframes enchanted-shine {
   0% {
-    background-position: 0% 0%;
     filter: hue-rotate(0deg);
   }
   50% {
-    filter: hue-rotate(180deg);
+    filter: hue-rotate(90deg);
   }
   100% {
-    background-position: 200% 200%;
-    filter: hue-rotate(360deg);
+    filter: hue-rotate(0deg);
   }
 }
 
