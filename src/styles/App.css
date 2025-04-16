@@ -39,12 +39,10 @@
 }
 
 .set-selector {
-  margin-bottom: 1rem;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
-  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .set-selector label {
@@ -52,11 +50,23 @@
   color: #f1c40f;
 }
 
+.custom-cost-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.custom-cost-input {
+  width: 80px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
 .set-dropdown {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;

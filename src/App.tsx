@@ -14,14 +14,16 @@ const App: React.FC = () => {
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
   const [useEightyPercent, setUseEightyPercent] = useState(false);
+  const [customPackCost, setCustomPackCost] = useState<number | null>(null);
 
   const adjustedValue = useEightyPercent ? totalValue * 0.8 : totalValue;
+  const packCost = customPackCost ?? PACK_COSTS[currentSet].sealed_booster;
+  const boxCost = customPackCost ? customPackCost * 24 : PACK_COSTS[currentSet].box;
+  const caseCost = customPackCost ? customPackCost * 96 : PACK_COSTS[currentSet].case;
 
   const handleOpenPack = () => {
     setIsOpening(true);
     const { cards: newCards, packValue: newPackValue } = openPack(currentSet, true);
-    const packCost = PACK_COSTS[currentSet].sealed_booster;
-
     setCards(newCards);
     setOpenedCards(prev => [...prev, ...newCards]);
     setPacksOpened(prev => prev + 1);
@@ -34,7 +36,6 @@ const App: React.FC = () => {
     setIsOpening(true);
     let totalValue = 0;
     let allNewCards: Card[] = [];
-    const boxCost = PACK_COSTS[currentSet].box;
 
     let allowEnchanted = true;
     for (let i = 0; i < 24; i++) {
@@ -58,7 +59,6 @@ const App: React.FC = () => {
     setIsOpening(true);
     let totalValue = 0;
     let allNewCards: Card[] = [];
-    const caseCost = PACK_COSTS[currentSet].case;
 
     let numEnchanted = 0;
     for (let i = 0; i < 96; i++) {
@@ -143,16 +143,30 @@ const App: React.FC = () => {
                     </option>
                   ))}
                 </select>
+                <label className="custom-cost-label">
+                  Custom Pack Cost: $
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={customPackCost ?? ''}
+                    onChange={e =>
+                      setCustomPackCost(e.target.value ? parseFloat(e.target.value) : null)
+                    }
+                    placeholder={PACK_COSTS[currentSet].sealed_booster.toFixed(2)}
+                    className="custom-cost-input"
+                  />
+                </label>
               </div>
               <div className="pack-buttons">
                 <button className="open-pack-button" onClick={handleOpenPack} disabled={isOpening}>
-                  Open Single Pack (${PACK_COSTS[currentSet].sealed_booster.toFixed(2)})
+                  Open Single Pack (${packCost.toFixed(2)})
                 </button>
                 <button className="open-box-button" onClick={handleOpenBox} disabled={isOpening}>
-                  Open Box - 24 Packs (${PACK_COSTS[currentSet].box.toFixed(2)})
+                  Open Box - 24 Packs (${boxCost.toFixed(2)})
                 </button>
                 <button className="open-case-button" onClick={handleOpenCase} disabled={isOpening}>
-                  Open Case - 96 Packs (${PACK_COSTS[currentSet].case.toFixed(2)})
+                  Open Case - 96 Packs (${caseCost.toFixed(2)})
                 </button>
               </div>
             </div>
