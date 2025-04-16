@@ -49,7 +49,7 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false, useEig
         <div className="card-details">
           <div className="price-container">
             <span
-              className={`price ${adjustedPrice > 10 ? 'high-value' : ''} ${adjustedPrice > 100 ? 'premium-value' : ''}`}
+              className={`price ${adjustedPrice > 5 ? 'medium-value' : ''} ${adjustedPrice > 10 ? 'high-value' : ''} ${adjustedPrice > 100 ? 'premium-value' : ''}`}
             >
               ${adjustedPrice.toFixed(2)}
             </span>

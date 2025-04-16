@@ -172,6 +172,11 @@
   transition: all 0.3s ease;
 }
 
+.card-details .price.medium-value {
+  color: #ff9800;
+  font-weight: bold;
+}
+
 .card-details .price.high-value {
   color: #4caf50;
   font-weight: bold;
