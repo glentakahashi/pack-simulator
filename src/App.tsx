@@ -13,6 +13,9 @@ const App: React.FC = () => {
   const [packsOpened, setPacksOpened] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
+  const [useEightyPercent, setUseEightyPercent] = useState(false);
+
+  const adjustedValue = useEightyPercent ? totalValue * 0.8 : totalValue;
 
   const handleOpenPack = () => {
     setIsOpening(true);
@@ -83,7 +86,7 @@ const App: React.FC = () => {
     setTotalValue(0);
   };
 
-  const profitLoss = totalValue - totalCost;
+  const profitLoss = adjustedValue - totalCost;
 
   return (
     <div className="app">
@@ -110,6 +113,16 @@ const App: React.FC = () => {
                   ${profitLoss.toFixed(2)} (
                   {totalCost === 0 ? '0' : ((profitLoss / totalCost) * 100).toFixed(1)}%)
                 </span>
+              </div>
+              <div className="stat-box">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={useEightyPercent}
+                    onChange={e => setUseEightyPercent(e.target.checked)}
+                  />
+                  Use 80% of TCGPlayer price
+                </label>
               </div>
               <button className="reset-button" onClick={handleReset}>
                 Reset Session
