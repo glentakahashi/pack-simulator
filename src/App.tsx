@@ -129,20 +129,22 @@ const App: React.FC = () => {
               </button>
             </div>
             <div className="set-selector-container">
-              <div className="set-selector">
-                <label htmlFor="set-select">Select Set:</label>
-                <select
-                  id="set-select"
-                  value={currentSet}
-                  onChange={e => setCurrentSet(e.target.value as SetName)}
-                  className="set-dropdown"
-                >
-                  {Object.keys(PACK_COSTS).map(set => (
-                    <option key={set} value={set}>
-                      {set}
-                    </option>
-                  ))}
-                </select>
+              <div className="set-selector-options">
+                <div className="set-selector">
+                  <label htmlFor="set-select">Select Set:</label>
+                  <select
+                    id="set-select"
+                    value={currentSet}
+                    onChange={e => setCurrentSet(e.target.value as SetName)}
+                    className="set-dropdown"
+                  >
+                    {Object.keys(PACK_COSTS).map(set => (
+                      <option key={set} value={set}>
+                        {set}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <label className="custom-cost-label">
                   Custom Pack Cost: $
                   <input

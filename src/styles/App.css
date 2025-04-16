@@ -42,12 +42,24 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
 }
 
-.set-selector label {
+.set-selector-container label {
   font-size: 1.1rem;
   color: #f1c40f;
+}
+
+.set-selector-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .set-selector-options {
+    flex-direction: column;
+  }
 }
 
 .custom-cost-label {
@@ -238,10 +250,6 @@ main {
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
-  }
-
-  .stats-container {
-    width: 100%;
   }
 }
 
