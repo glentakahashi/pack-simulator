@@ -1,17 +1,23 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { Card } from '../types/card';
 import { Card as CardComponent } from './Card';
 import '../styles/CardDisplay.css';
 
 interface CardDisplayProps {
   cards: Card[];
+  revealImmediately: boolean;
+  sortByPrice: boolean;
+  useEightyPercent: boolean;
+  openNumber: number;
 }
 
-export const CardDisplay: React.FC<CardDisplayProps> = ({ cards }) => {
-  const [revealImmediately, setRevealImmediately] = useState(false);
-  const [sortByPrice, setSortByPrice] = useState(false);
-  const renderCount = useRef(0);
-
+export const CardDisplay: React.FC<CardDisplayProps> = ({
+  cards,
+  revealImmediately,
+  sortByPrice,
+  useEightyPercent,
+  openNumber,
+}) => {
   // Only sort if sortByPrice is enabled
   const displayCards = sortByPrice
     ? [...cards].sort((a, b) => {
@@ -25,37 +31,15 @@ export const CardDisplay: React.FC<CardDisplayProps> = ({ cards }) => {
       })
     : cards;
 
-  // Increment render count when cards change
-  React.useEffect(() => {
-    renderCount.current += 1;
-  }, [cards]);
-
   return (
     <div className="cards-container">
-      <div className="display-options">
-        <label>
-          <input
-            type="checkbox"
-            checked={revealImmediately}
-            onChange={e => setRevealImmediately(e.target.checked)}
-          />
-          Reveal cards immediately
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={sortByPrice}
-            onChange={e => setSortByPrice(e.target.checked)}
-          />
-          Sort by price (high to low)
-        </label>
-      </div>
       {displayCards.map((card, index) => (
         <CardComponent
-          key={`${card.id}-${index}-${renderCount.current}`}
+          key={`${card.id}-${index}-${openNumber}`}
           card={card}
           index={index}
           hideUntilHover={!revealImmediately}
+          useEightyPercent={useEightyPercent}
         />
       ))}
     </div>

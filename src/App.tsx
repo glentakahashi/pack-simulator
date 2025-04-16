@@ -15,6 +15,9 @@ const App: React.FC = () => {
   const [totalValue, setTotalValue] = useState(0);
   const [useEightyPercent, setUseEightyPercent] = useState(false);
   const [customPackCost, setCustomPackCost] = useState<number | null>(null);
+  const [revealImmediately, setRevealImmediately] = useState(false);
+  const [sortByPrice, setSortByPrice] = useState(false);
+  const [openNumber, setOpenNumber] = useState(0);
 
   const adjustedValue = useEightyPercent ? totalValue * 0.8 : totalValue;
   const packCost = customPackCost ?? PACK_COSTS[currentSet].sealed_booster;
@@ -30,6 +33,7 @@ const App: React.FC = () => {
     setTotalCost(prev => prev + packCost);
     setTotalValue(prev => prev + newPackValue);
     setIsOpening(false);
+    setOpenNumber(prev => prev + 1);
   };
 
   const handleOpenBox = () => {
@@ -53,6 +57,7 @@ const App: React.FC = () => {
     setTotalCost(prev => prev + boxCost);
     setTotalValue(prev => prev + totalValue);
     setIsOpening(false);
+    setOpenNumber(prev => prev + 24);
   };
 
   const handleOpenCase = () => {
@@ -76,6 +81,7 @@ const App: React.FC = () => {
     setTotalCost(prev => prev + caseCost);
     setTotalValue(prev => prev + totalValue);
     setIsOpening(false);
+    setOpenNumber(prev => prev + 96);
   };
 
   const handleReset = () => {
@@ -114,20 +120,23 @@ const App: React.FC = () => {
                   {totalCost === 0 ? '0' : ((profitLoss / totalCost) * 100).toFixed(1)}%)
                 </span>
               </div>
-              <div className="stat-box">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={useEightyPercent}
-                    onChange={e => setUseEightyPercent(e.target.checked)}
-                  />
-                  Use 80% of TCGPlayer price
-                </label>
-              </div>
               <button className="reset-button" onClick={handleReset}>
                 Reset Session
               </button>
             </div>
+
+            <div className="pack-buttons">
+              <button className="open-pack-button" onClick={handleOpenPack} disabled={isOpening}>
+                Open Single Pack (${packCost.toFixed(2)})
+              </button>
+              <button className="open-box-button" onClick={handleOpenBox} disabled={isOpening}>
+                Open Box - 24 Packs (${boxCost.toFixed(2)})
+              </button>
+              <button className="open-case-button" onClick={handleOpenCase} disabled={isOpening}>
+                Open Case - 96 Packs (${caseCost.toFixed(2)})
+              </button>
+            </div>
+
             <div className="set-selector-container">
               <div className="set-selector-options">
                 <div className="set-selector">
@@ -159,17 +168,32 @@ const App: React.FC = () => {
                     className="custom-cost-input"
                   />
                 </label>
-              </div>
-              <div className="pack-buttons">
-                <button className="open-pack-button" onClick={handleOpenPack} disabled={isOpening}>
-                  Open Single Pack (${packCost.toFixed(2)})
-                </button>
-                <button className="open-box-button" onClick={handleOpenBox} disabled={isOpening}>
-                  Open Box - 24 Packs (${boxCost.toFixed(2)})
-                </button>
-                <button className="open-case-button" onClick={handleOpenCase} disabled={isOpening}>
-                  Open Case - 96 Packs (${caseCost.toFixed(2)})
-                </button>
+                <div className="display-options">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={useEightyPercent}
+                      onChange={e => setUseEightyPercent(e.target.checked)}
+                    />
+                    Use 80% of TCGPlayer price
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={revealImmediately}
+                      onChange={e => setRevealImmediately(e.target.checked)}
+                    />
+                    Reveal cards immediately
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={sortByPrice}
+                      onChange={e => setSortByPrice(e.target.checked)}
+                    />
+                    Sort by price (high to low)
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -177,7 +201,13 @@ const App: React.FC = () => {
       </header>
 
       <main>
-        <CardDisplay cards={cards} />
+        <CardDisplay
+          cards={cards}
+          revealImmediately={revealImmediately}
+          sortByPrice={sortByPrice}
+          useEightyPercent={useEightyPercent}
+          openNumber={openNumber}
+        />
         <CardTracker openedCards={openedCards} />
       </main>
       <footer className="app-footer">

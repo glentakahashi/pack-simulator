@@ -6,11 +6,13 @@ interface CardProps {
   card: CardType;
   index: number;
   hideUntilHover?: boolean;
+  useEightyPercent: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
+export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false, useEightyPercent }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const price = card.isFoil ? card.foilPrice : card.normalPrice;
+  const adjustedPrice = useEightyPercent ? price * 0.8 : price;
 
   const handleReveal = () => {
     if (hideUntilHover) {
@@ -47,9 +49,9 @@ export const Card: React.FC<CardProps> = ({ card, hideUntilHover = false }) => {
         <div className="card-details">
           <div className="price-container">
             <span
-              className={`price ${price > 10 ? 'high-value' : ''} ${price > 100 ? 'premium-value' : ''}`}
+              className={`price ${adjustedPrice > 10 ? 'high-value' : ''} ${adjustedPrice > 100 ? 'premium-value' : ''}`}
             >
-              ${price.toFixed(2)}
+              ${adjustedPrice.toFixed(2)}
             </span>
             {card.isFoil && <span className="foil-badge">Foil</span>}
           </div>
