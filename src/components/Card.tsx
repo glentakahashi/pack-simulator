@@ -10,8 +10,9 @@ interface CardProps {
 }
 
 const getPriceTier = (price: number): string => {
-  if (price > 100) return 'tier-4';
-  if (price > 25) return 'tier-3';
+  if (price > 100) return 'tier-5';
+  if (price > 25) return 'tier-4';
+  if (price > 10) return 'tier-3';
   if (price > 5) return 'tier-2';
   if (price > 1) return 'tier-1';
   return 'tier-0';
