@@ -9,14 +9,14 @@ const App: React.FC = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [openedCards, setOpenedCards] = useState<Card[]>([]);
   const [isOpening, setIsOpening] = useState(false);
-  const [currentSet, setCurrentSet] = useState<SetName>('The First Chapter');
+  const [currentSet, setCurrentSet] = useState<SetName>('Reign of Jafar');
   const [packsOpened, setPacksOpened] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
-  const [useEightyPercent, setUseEightyPercent] = useState(false);
+  const [useEightyPercent, setUseEightyPercent] = useState(true);
   const [customPackCost, setCustomPackCost] = useState<number | null>(null);
-  const [revealImmediately, setRevealImmediately] = useState(false);
-  const [sortByPrice, setSortByPrice] = useState(false);
+  const [revealImmediately, setRevealImmediately] = useState(true);
+  const [sortMode, setSortMode] = useState<'open' | 'price' | 'rarity'>('rarity');
   const [openNumber, setOpenNumber] = useState(0);
 
   const adjustedValue = useEightyPercent ? totalValue * 0.8 : totalValue;
@@ -185,14 +185,19 @@ const App: React.FC = () => {
                     />
                     Reveal cards immediately
                   </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={sortByPrice}
-                      onChange={e => setSortByPrice(e.target.checked)}
-                    />
-                    Sort by price (high to low)
-                  </label>
+                  <div className="sort-mode-selector">
+                    <label htmlFor="sort-mode">Sort by:</label>
+                    <select
+                      id="sort-mode"
+                      value={sortMode}
+                      onChange={e => setSortMode(e.target.value as 'open' | 'price' | 'rarity')}
+                      className="sort-dropdown"
+                    >
+                      <option value="open">Open Order</option>
+                      <option value="price">Price (high to low)</option>
+                      <option value="rarity">Rarity</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
@@ -204,14 +209,14 @@ const App: React.FC = () => {
         <CardDisplay
           cards={cards}
           revealImmediately={revealImmediately}
-          sortByPrice={sortByPrice}
+          sortMode={sortMode}
           useEightyPercent={useEightyPercent}
           openNumber={openNumber}
         />
         <CardTracker openedCards={openedCards} />
       </main>
       <footer className="app-footer">
-        <div className="watermark">Prices updated 4/29/25</div>
+        <div className="watermark">Prices updated 5/20/25</div>
         <div className="disclaimer">All images are property of Ravensburger and Disney</div>
       </footer>
     </div>

@@ -11,8 +11,9 @@ SET_TO_TCGPLAYER_IDS = {
     "Into the Inklands": {'sealed_booster': "543932", 'box': "531521", 'case': "531522"},
     "Ursula's Return": {'sealed_booster': "553902", 'box': "543859", 'case': "543885"},
     "Shimmering Skies": {'sealed_booster': "565133", 'box': "555130", 'case': "555131"},
-      "Azurite Sea": {'sealed_booster': "593831", 'box': "578093", 'case': "578094"},
-    "Archazia's Island": {'sealed_booster': "607762", 'box': "607758", 'case': "607759"}
+    "Azurite Sea": {'sealed_booster': "593831", 'box': "578093", 'case': "578094"},
+    "Archazia's Island": {'sealed_booster': "607762", 'box': "607758", 'case': "607759"},
+    "Reign of Jafar": {'sealed_booster': "623062", 'box': "623064", 'case': "623067"}
 }
 
 # Initialize prices dictionary

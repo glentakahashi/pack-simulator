@@ -10,7 +10,8 @@ export type SetName =
   | "Ursula's Return"
   | 'Shimmering Skies'
   | 'Azurite Sea'
-  | "Archazia's Island";
+  | "Archazia's Island"
+  | 'Reign of Jafar';
 
 const SetIdToSetName: Record<string, SetName> = {
   '001': 'The First Chapter',
@@ -20,6 +21,7 @@ const SetIdToSetName: Record<string, SetName> = {
   '005': 'Shimmering Skies',
   '006': 'Azurite Sea',
   '007': "Archazia's Island",
+  '008': 'Reign of Jafar',
 };
 
 interface SetPrices {

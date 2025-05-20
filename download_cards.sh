@@ -26,7 +26,7 @@ download_image() {
 }
 
 # Main download loop
-for set in {1..7}; do
+for set in {8..8}; do
     echo "Processing set $set..."
     
     # Sets 1-2 have 216 cards

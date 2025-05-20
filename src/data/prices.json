@@ -1,9 +1,10 @@
 {
-  "The First Chapter": { "sealed_booster": 14.6, "box": 410.28, "case": 1455.08 },
-  "Rise of the Floodborn": { "sealed_booster": 6.57, "box": 168.45, "case": 642.33 },
-  "Into the Inklands": { "sealed_booster": 5.57, "box": 80.54, "case": 402.2 },
-  "Ursula's Return": { "sealed_booster": 5.01, "box": 93.19, "case": 376.35 },
-  "Shimmering Skies": { "sealed_booster": 4.65, "box": 103.72, "case": 416.55 },
-  "Azurite Sea": { "sealed_booster": 7.28, "box": 98.58, "case": 404.62 },
-  "Archazia's Island": { "sealed_booster": 8.97, "box": 118.77, "case": 542.53 }
+  "The First Chapter": { "sealed_booster": 14.86, "box": 364.27, "case": 1427.29 },
+  "Rise of the Floodborn": { "sealed_booster": 6.76, "box": 160.86, "case": 682.28 },
+  "Into the Inklands": { "sealed_booster": 5.52, "box": 75.14, "case": 392.58 },
+  "Ursula's Return": { "sealed_booster": 5.77, "box": 84.62, "case": 394.37 },
+  "Shimmering Skies": { "sealed_booster": 4.87, "box": 92.26, "case": 428.86 },
+  "Azurite Sea": { "sealed_booster": 6.72, "box": 91.37, "case": 405.35 },
+  "Archazia's Island": { "sealed_booster": 8.93, "box": 115.2, "case": 441.1 },
+  "Reign of Jafar": { "sealed_booster": 5.99, "box": 122.25, "case": 463.08 }
 }
