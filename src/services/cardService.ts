@@ -96,7 +96,11 @@ const FOIL_RARITY_DISTRIBUTION: Record<Rarity, number> = {
 
 export const openPack = (
   set: SetName,
-  allowEnchanted: boolean
+  limits: {
+    allowEnchanted: boolean;
+    allowLegendary: boolean;
+    allowLegendaryFoil: boolean;
+  }
 ): { cards: Card[]; packValue: number } => {
   const pack: Card[] = [];
   const rarityPools = RARITY_POOLS[set];
@@ -129,7 +133,7 @@ export const openPack = (
     const rarityRoll = Math.random();
     let selectedPool;
 
-    if (rarityRoll < RARE_RARITY_DISTRIBUTION.Legendary / 2) {
+    if (limits.allowLegendary && rarityRoll < RARE_RARITY_DISTRIBUTION.Legendary / 2) {
       selectedPool = rarityPools.Legendary;
       tiers[i] = 2;
     } else if (rarityRoll < RARE_RARITY_DISTRIBUTION['Super Rare'] / 2) {
@@ -162,9 +166,9 @@ export const openPack = (
   const foilRoll = Math.random();
   let foilPool;
 
-  if (allowEnchanted && foilRoll < FOIL_RARITY_DISTRIBUTION.Enchanted) {
+  if (limits.allowEnchanted && foilRoll < FOIL_RARITY_DISTRIBUTION.Enchanted) {
     foilPool = rarityPools.Enchanted;
-  } else if (foilRoll < FOIL_RARITY_DISTRIBUTION.Legendary) {
+  } else if (limits.allowLegendaryFoil && foilRoll < FOIL_RARITY_DISTRIBUTION.Legendary) {
     foilPool = rarityPools.Legendary;
   } else if (foilRoll < FOIL_RARITY_DISTRIBUTION['Super Rare']) {
     foilPool = rarityPools['Super Rare'];

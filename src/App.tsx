@@ -18,6 +18,9 @@ const App: React.FC = () => {
   const [revealImmediately, setRevealImmediately] = useState(true);
   const [sortMode, setSortMode] = useState<'open' | 'price' | 'rarity'>('rarity');
   const [openNumber, setOpenNumber] = useState(0);
+  // const [enchantedCount, setEnchantedCount] = useState(0);
+  // const [legendaryCount, setLegendaryCount] = useState(0);
+  // const [legendaryFoilCount, setLegendaryFoilCount] = useState(0);
 
   const adjustedValue = useEightyPercent ? totalValue * 0.8 : totalValue;
   const packCost = customPackCost ?? PACK_COSTS[currentSet].sealed_booster;
@@ -26,7 +29,11 @@ const App: React.FC = () => {
 
   const handleOpenPack = () => {
     setIsOpening(true);
-    const { cards: newCards, packValue: newPackValue } = openPack(currentSet, true);
+    const { cards: newCards, packValue: newPackValue } = openPack(currentSet, {
+      allowEnchanted: true,
+      allowLegendary: true,
+      allowLegendaryFoil: true,
+    });
     setCards(newCards);
     setOpenedCards(prev => [...prev, ...newCards]);
     setPacksOpened(prev => prev + 1);
@@ -40,13 +47,28 @@ const App: React.FC = () => {
     setIsOpening(true);
     let totalValue = 0;
     let allNewCards: Card[] = [];
+    let boxEnchantedCount = 0;
+    let boxLegendaryCount = 0;
+    let boxLegendaryFoilCount = 0;
 
-    let allowEnchanted = true;
     for (let i = 0; i < 24; i++) {
-      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, allowEnchanted);
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, {
+        allowEnchanted: boxEnchantedCount < 1,
+        allowLegendary: boxLegendaryCount < 8,
+        allowLegendaryFoil: boxLegendaryFoilCount < 2,
+      });
+
+      // Update counts
       if (newCards.some(card => card.rarity === 'Enchanted')) {
-        allowEnchanted = false;
+        boxEnchantedCount++;
       }
+      if (newCards.some(card => card.rarity === 'Legendary' && !card.isFoil)) {
+        boxLegendaryCount++;
+      }
+      if (newCards.some(card => card.rarity === 'Legendary' && card.isFoil)) {
+        boxLegendaryFoilCount++;
+      }
+
       totalValue += newPackValue;
       allNewCards = [...allNewCards, ...newCards];
     }
@@ -56,6 +78,9 @@ const App: React.FC = () => {
     setPacksOpened(prev => prev + 24);
     setTotalCost(prev => prev + boxCost);
     setTotalValue(prev => prev + totalValue);
+    // setEnchantedCount(prev => prev + boxEnchantedCount);
+    // setLegendaryCount(prev => prev + boxLegendaryCount);
+    // setLegendaryFoilCount(prev => prev + boxLegendaryFoilCount);
     setIsOpening(false);
     setOpenNumber(prev => prev + 24);
   };
@@ -64,13 +89,28 @@ const App: React.FC = () => {
     setIsOpening(true);
     let totalValue = 0;
     let allNewCards: Card[] = [];
+    let caseEnchantedCount = 0;
+    let caseLegendaryCount = 0;
+    let caseLegendaryFoilCount = 0;
 
-    let numEnchanted = 0;
     for (let i = 0; i < 96; i++) {
-      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, numEnchanted < 2);
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, {
+        allowEnchanted: caseEnchantedCount < 2,
+        allowLegendary: caseLegendaryCount < 22,
+        allowLegendaryFoil: caseLegendaryFoilCount < 5,
+      });
+
+      // Update counts
       if (newCards.some(card => card.rarity === 'Enchanted')) {
-        numEnchanted++;
+        caseEnchantedCount++;
       }
+      if (newCards.some(card => card.rarity === 'Legendary' && !card.isFoil)) {
+        caseLegendaryCount++;
+      }
+      if (newCards.some(card => card.rarity === 'Legendary' && card.isFoil)) {
+        caseLegendaryFoilCount++;
+      }
+
       totalValue += newPackValue;
       allNewCards = [...allNewCards, ...newCards];
     }
@@ -80,6 +120,9 @@ const App: React.FC = () => {
     setPacksOpened(prev => prev + 96);
     setTotalCost(prev => prev + caseCost);
     setTotalValue(prev => prev + totalValue);
+    // setEnchantedCount(prev => prev + caseEnchantedCount);
+    // setLegendaryCount(prev => prev + caseLegendaryCount);
+    // setLegendaryFoilCount(prev => prev + caseLegendaryFoilCount);
     setIsOpening(false);
     setOpenNumber(prev => prev + 96);
   };
@@ -90,6 +133,9 @@ const App: React.FC = () => {
     setPacksOpened(0);
     setTotalCost(0);
     setTotalValue(0);
+    // setEnchantedCount(0);
+    // setLegendaryCount(0);
+    // setLegendaryFoilCount(0);
   };
 
   const profitLoss = adjustedValue - totalCost;
@@ -120,6 +166,18 @@ const App: React.FC = () => {
                   {totalCost === 0 ? '0' : ((profitLoss / totalCost) * 100).toFixed(1)}%)
                 </span>
               </div>
+              {/* <div className="stat-box">
+                <span className="stat-label">Enchanted Cards:</span>
+                <span className="stat-value">{enchantedCount}</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-label">Legendary Cards:</span>
+                <span className="stat-value">{legendaryCount}</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-label">Legendary Foils:</span>
+                <span className="stat-value">{legendaryFoilCount}</span>
+              </div> */}
               <button className="reset-button" onClick={handleReset}>
                 Reset Session
               </button>
