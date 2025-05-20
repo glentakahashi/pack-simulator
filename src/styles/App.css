@@ -4,6 +4,10 @@
   color: var(--text);
   position: relative;
   padding: 1rem;
+  --sealed: #0d9488;
+  --sealed-dark: #0f766e;
+  --trove: #7c3aed;
+  --trove-dark: #6d28d9;
 }
 
 .app-header {
@@ -211,7 +215,9 @@
 
 .open-pack-button,
 .open-box-button,
-.open-case-button {
+.open-case-button,
+.open-sealed-button,
+.open-trove-button {
   background: var(--primary);
   color: white;
   border: none;
@@ -225,14 +231,18 @@
 
 .open-pack-button:hover,
 .open-box-button:hover,
-.open-case-button:hover {
+.open-case-button:hover,
+.open-sealed-button:hover,
+.open-trove-button:hover {
   background: var(--primary-dark);
   transform: translateY(-2px);
 }
 
 .open-pack-button:disabled,
 .open-box-button:disabled,
-.open-case-button:disabled {
+.open-case-button:disabled,
+.open-sealed-button:disabled,
+.open-trove-button:disabled {
   background: var(--text-secondary);
   cursor: not-allowed;
   transform: none;
@@ -244,6 +254,22 @@
 
 .open-box-button:hover {
   background: var(--secondary-dark);
+}
+
+.open-sealed-button {
+  background: var(--sealed);
+}
+
+.open-sealed-button:hover {
+  background: var(--sealed-dark);
+}
+
+.open-trove-button {
+  background: var(--trove);
+}
+
+.open-trove-button:hover {
+  background: var(--trove-dark);
 }
 
 .open-case-button {

@@ -28,6 +28,7 @@ interface SetPrices {
   sealed_booster: number;
   box: number;
   case: number;
+  trove: number;
 }
 
 export const PACK_COSTS: Record<SetName, SetPrices> = pricesData;

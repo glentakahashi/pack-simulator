@@ -26,6 +26,8 @@ const App: React.FC = () => {
   const packCost = customPackCost ?? PACK_COSTS[currentSet].sealed_booster;
   const boxCost = customPackCost ? customPackCost * 24 : PACK_COSTS[currentSet].box;
   const caseCost = customPackCost ? customPackCost * 96 : PACK_COSTS[currentSet].case;
+  const sealedCost = customPackCost ? customPackCost * 8 : boxCost / 4; // 6 packs = 1/4 of a box
+  const troveCost = customPackCost ? customPackCost * 8 : PACK_COSTS[currentSet].trove;
 
   const handleOpenPack = () => {
     setIsOpening(true);
@@ -41,6 +43,69 @@ const App: React.FC = () => {
     setTotalValue(prev => prev + newPackValue);
     setIsOpening(false);
     setOpenNumber(prev => prev + 1);
+  };
+
+  const handleOpenSealed = () => {
+    setIsOpening(true);
+    let totalValue = 0;
+    let allNewCards: Card[] = [];
+
+    for (let i = 0; i < 6; i++) {
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, {
+        allowEnchanted: true,
+        allowLegendary: true,
+        allowLegendaryFoil: true,
+      });
+      totalValue += newPackValue;
+      allNewCards = [...allNewCards, ...newCards];
+    }
+
+    setCards(allNewCards);
+    setOpenedCards(prev => [...prev, ...allNewCards]);
+    setPacksOpened(prev => prev + 6);
+    setTotalCost(prev => prev + sealedCost);
+    setTotalValue(prev => prev + totalValue);
+    setIsOpening(false);
+    setOpenNumber(prev => prev + 6);
+  };
+
+  const handleOpenTrove = () => {
+    setIsOpening(true);
+    let totalValue = 0;
+    let allNewCards: Card[] = [];
+    let troveEnchantedCount = 0;
+    let troveLegendaryCount = 0;
+    let troveLegendaryFoilCount = 0;
+
+    for (let i = 0; i < 8; i++) {
+      const { cards: newCards, packValue: newPackValue } = openPack(currentSet, {
+        allowEnchanted: troveEnchantedCount < 2,
+        allowLegendary: troveLegendaryCount < 5,
+        allowLegendaryFoil: troveLegendaryFoilCount < 2,
+      });
+
+      // Update counts
+      if (newCards.some(card => card.rarity === 'Enchanted')) {
+        troveEnchantedCount++;
+      }
+      if (newCards.some(card => card.rarity === 'Legendary' && !card.isFoil)) {
+        troveLegendaryCount++;
+      }
+      if (newCards.some(card => card.rarity === 'Legendary' && card.isFoil)) {
+        troveLegendaryFoilCount++;
+      }
+
+      totalValue += newPackValue;
+      allNewCards = [...allNewCards, ...newCards];
+    }
+
+    setCards(allNewCards);
+    setOpenedCards(prev => [...prev, ...allNewCards]);
+    setPacksOpened(prev => prev + 8);
+    setTotalCost(prev => prev + troveCost);
+    setTotalValue(prev => prev + totalValue);
+    setIsOpening(false);
+    setOpenNumber(prev => prev + 8);
   };
 
   const handleOpenBox = () => {
@@ -187,6 +252,16 @@ const App: React.FC = () => {
               <button className="open-pack-button" onClick={handleOpenPack} disabled={isOpening}>
                 Open Single Pack (${packCost.toFixed(2)})
               </button>
+              <button
+                className="open-sealed-button"
+                onClick={handleOpenSealed}
+                disabled={isOpening}
+              >
+                Open Sealed (6 Packs) (${sealedCost.toFixed(2)})
+              </button>
+              <button className="open-trove-button" onClick={handleOpenTrove} disabled={isOpening}>
+                Open Trove (8 Packs) (${troveCost.toFixed(2)})
+              </button>
               <button className="open-box-button" onClick={handleOpenBox} disabled={isOpening}>
                 Open Box - 24 Packs (${boxCost.toFixed(2)})
               </button>
@@ -205,11 +280,13 @@ const App: React.FC = () => {
                     onChange={e => setCurrentSet(e.target.value as SetName)}
                     className="set-dropdown"
                   >
-                    {Object.keys(PACK_COSTS).map(set => (
-                      <option key={set} value={set}>
-                        {set}
-                      </option>
-                    ))}
+                    {Object.keys(PACK_COSTS)
+                      .reverse()
+                      .map(set => (
+                        <option key={set} value={set}>
+                          {set}
+                        </option>
+                      ))}
                   </select>
                 </div>
                 <label className="custom-cost-label">
