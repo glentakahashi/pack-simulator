@@ -27,6 +27,12 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card.foil {
@@ -317,4 +323,105 @@
 
 .card.hide-until-hover.enchanted.revealed {
   box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
+}
+
+/* Zoom Modal Styles */
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.zoom-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  z-index: 1002;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.zoomed-image {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.zoom-card-info {
+  text-align: center;
+  color: white;
+  padding: 1rem;
+}
+
+.zoom-card-info h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.card-rarity {
+  color: var(--card-rarity);
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.foil-indicator {
+  color: #f1c40f;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.card-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
 }
