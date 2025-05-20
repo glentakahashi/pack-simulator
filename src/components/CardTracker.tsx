@@ -56,6 +56,41 @@ export const CardTracker: React.FC<CardTrackerProps> = ({ openedCards }) => {
   return (
     <div className="card-tracker">
       <h2>Opened Cards</h2>
+
+      <div className="rarity-breakdown">
+        {Object.entries(
+          openedCards.reduce(
+            (acc, card) => {
+              acc[card.rarity] = (acc[card.rarity] || 0) + 1;
+              return acc;
+            },
+            {} as Record<Rarity, number>
+          )
+        )
+          .sort((a, b) => {
+            const rarityOrder: Record<Rarity, number> = {
+              Enchanted: 0,
+              Legendary: 1,
+              'Super Rare': 2,
+              Rare: 3,
+              Uncommon: 4,
+              Common: 5,
+            };
+            return rarityOrder[a[0] as Rarity] - rarityOrder[b[0] as Rarity];
+          })
+          .map(([rarity, count]) => (
+            <div key={rarity} className="rarity-stat">
+              <img
+                src={rarityImages[rarity as Rarity]}
+                alt={rarity}
+                className="rarity-icon"
+                title={rarity}
+              />
+              <span className="rarity-count">{count}</span>
+            </div>
+          ))}
+      </div>
+
       <div className="card-list">
         {sortedCards.map(([id, info]) => (
           <div key={id} className="tracked-card">

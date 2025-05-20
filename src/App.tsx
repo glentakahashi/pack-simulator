@@ -18,9 +18,6 @@ const App: React.FC = () => {
   const [revealImmediately, setRevealImmediately] = useState(true);
   const [sortMode, setSortMode] = useState<'open' | 'price' | 'rarity'>('rarity');
   const [openNumber, setOpenNumber] = useState(0);
-  // const [enchantedCount, setEnchantedCount] = useState(0);
-  // const [legendaryCount, setLegendaryCount] = useState(0);
-  // const [legendaryFoilCount, setLegendaryFoilCount] = useState(0);
 
   const adjustedValue = useEightyPercent ? totalValue * 0.8 : totalValue;
   const packCost = customPackCost ?? PACK_COSTS[currentSet].sealed_booster;
@@ -143,9 +140,6 @@ const App: React.FC = () => {
     setPacksOpened(prev => prev + 24);
     setTotalCost(prev => prev + boxCost);
     setTotalValue(prev => prev + totalValue);
-    // setEnchantedCount(prev => prev + boxEnchantedCount);
-    // setLegendaryCount(prev => prev + boxLegendaryCount);
-    // setLegendaryFoilCount(prev => prev + boxLegendaryFoilCount);
     setIsOpening(false);
     setOpenNumber(prev => prev + 24);
   };
@@ -185,9 +179,6 @@ const App: React.FC = () => {
     setPacksOpened(prev => prev + 96);
     setTotalCost(prev => prev + caseCost);
     setTotalValue(prev => prev + totalValue);
-    // setEnchantedCount(prev => prev + caseEnchantedCount);
-    // setLegendaryCount(prev => prev + caseLegendaryCount);
-    // setLegendaryFoilCount(prev => prev + caseLegendaryFoilCount);
     setIsOpening(false);
     setOpenNumber(prev => prev + 96);
   };
@@ -198,9 +189,6 @@ const App: React.FC = () => {
     setPacksOpened(0);
     setTotalCost(0);
     setTotalValue(0);
-    // setEnchantedCount(0);
-    // setLegendaryCount(0);
-    // setLegendaryFoilCount(0);
   };
 
   const profitLoss = adjustedValue - totalCost;
