@@ -339,7 +339,7 @@ const App: React.FC = () => {
         <CardTracker openedCards={openedCards} />
       </main>
       <footer className="app-footer">
-        <div className="watermark">Prices updated 5/20/25</div>
+        <div className="watermark">Prices updated 5/31/25</div>
         <div className="disclaimer">All images are property of Ravensburger and Disney</div>
       </footer>
     </div>
