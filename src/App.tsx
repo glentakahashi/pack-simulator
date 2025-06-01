@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [useEightyPercent, setUseEightyPercent] = useState(true);
   const [customPackCost, setCustomPackCost] = useState<number | null>(null);
   const [revealImmediately, setRevealImmediately] = useState(true);
-  const [sortMode, setSortMode] = useState<'open' | 'price' | 'rarity'>('rarity');
+  const [sortMode, setSortMode] = useState<'open' | 'price' | 'rarity'>('price');
   const [openNumber, setOpenNumber] = useState(0);
 
   const adjustedValue = useEightyPercent ? totalValue * 0.8 : totalValue;
