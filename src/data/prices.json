@@ -1,15 +1,15 @@
 {
-  "The First Chapter": { "sealed_booster": 14.84, "box": 356.48, "case": 1417.97, "trove": 348.68 },
+  "The First Chapter": { "sealed_booster": 14.84, "box": 356.69, "case": 1413.49, "trove": 348.68 },
   "Rise of the Floodborn": {
     "sealed_booster": 6.78,
-    "box": 161.18,
+    "box": 162.64,
     "case": 693.66,
-    "trove": 63.08
+    "trove": 63.03
   },
-  "Into the Inklands": { "sealed_booster": 5.45, "box": 74.58, "case": 394.71, "trove": 49.45 },
-  "Ursula's Return": { "sealed_booster": 5.7, "box": 84.74, "case": 394.37, "trove": 45.77 },
-  "Shimmering Skies": { "sealed_booster": 5.0, "box": 100.44, "case": 430.65, "trove": 39.82 },
-  "Azurite Sea": { "sealed_booster": 6.72, "box": 92.85, "case": 404.11, "trove": 35.24 },
-  "Archazia's Island": { "sealed_booster": 8.89, "box": 110.51, "case": 444.5, "trove": 40.53 },
-  "Reign of Jafar": { "sealed_booster": 5.99, "box": 118.09, "case": 477.31, "trove": 57.46 }
+  "Into the Inklands": { "sealed_booster": 5.4, "box": 74.11, "case": 394.71, "trove": 49.29 },
+  "Ursula's Return": { "sealed_booster": 5.7, "box": 84.72, "case": 394.37, "trove": 45.81 },
+  "Shimmering Skies": { "sealed_booster": 4.93, "box": 102.84, "case": 430.65, "trove": 39.82 },
+  "Azurite Sea": { "sealed_booster": 6.72, "box": 92.92, "case": 404.11, "trove": 35.28 },
+  "Archazia's Island": { "sealed_booster": 8.89, "box": 107.25, "case": 444.5, "trove": 40.38 },
+  "Reign of Jafar": { "sealed_booster": 5.99, "box": 117.728, "case": 470.49, "trove": 56.51 }
 }
